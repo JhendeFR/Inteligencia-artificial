@@ -23,3 +23,34 @@ dataclean_normalized
 X_intercept = np.c_[np.ones((X_normalized.shape[0], 1)), X_normalized]
 dataclean_intercept = pd.DataFrame(X_intercept, columns=["Intercept"] + column_names)
 dataclean_intercept
+n = X_intercept.shape[1]
+theta = np.zeros(n)
+def hypothesis(X, theta):
+    return X.dot(theta)
+def compute_cost(X, y, theta):
+    m = len(y)
+    h = hypothesis(X, theta)
+    error = h - y
+    costo = (1/(2*m)) * np.dot(error, error)
+    return costo
+def gradient_descent(X, y, theta, alpha, num_iters):
+    m = len(y)
+    cost_history = []
+    for i in range(num_iters):
+        h = hypothesis(X, theta)
+        error = h - y
+        gradient = (1/m) * np.dot(X.T, error)
+        theta = theta - alpha * gradient
+        cost = compute_cost(X, y, theta)
+        cost_history.append(cost)
+    return theta, cost_history
+alpha = 0.01
+num_iters = 1000
+theta_final, cost_history = gradient_descent(X_intercept, y, theta, alpha, num_iters)
+import matplotlib.pyplot as plt
+plt.figure(figsize=(8,6))
+plt.plot(range(num_iters), cost_history, color='blue')
+plt.title("Convergencia del Costo durante el Descenso por Gradiente")
+plt.xlabel("Número de Iteraciones")
+plt.ylabel("Costo")
+plt.show()

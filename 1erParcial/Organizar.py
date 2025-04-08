@@ -10,12 +10,11 @@ def extract_generation_data(filepath):
     try:
         # Cargar desde la fila 6
         df = pd.read_excel(filepath, sheet_name='Page 1 Generation and Fuel Data', skiprows=5)
-        df = df.dropna(axis=1, how='all') # Eliminar columnas vacías
+        df = df.dropna(axis=1, how='all')
         if "Plant Id" not in df.columns:
             return None
 
-        df = df[df["Plant Id"].notna()] # Eliminar filas sin ID de planta
-
+        df = df[df["Plant Id"].notna()]
         # Seleccionar columnas clave (que creo que son necesarias)
         col_map = {
             "Plant Id": "Plant_ID",
@@ -64,4 +63,3 @@ def main():
 if __name__ == "__main__":
     main()
     #Con esto tenemos 70.906 filas y 6 columnas con datos limpios y razonables para entrenar los modelos
-    #

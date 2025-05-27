@@ -8,7 +8,6 @@ OUTPUT_FILE = r"C:\Users\jhean\OneDrive\Documentos\Tareas\Inteligencia artificia
 # Funcion para extraer datos limpios desde cada archivo
 def extract_generation_data(filepath):
     try:
-        # Cargar desde la fila 6
         df = pd.read_excel(filepath, sheet_name='Page 1 Generation and Fuel Data', skiprows=5)
         df = df.dropna(axis=1, how='all')
         if "Plant Id" not in df.columns:
